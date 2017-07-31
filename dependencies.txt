@@ -1,6 +1,14 @@
 vim
 vim-gnome
+
 git
+meld
+default-jdk
+python
+python-setuptools
+nodejs
+nodejs-legacy
+
 curl
 exuberant-ctags
 ncurses-term
@@ -8,6 +16,3 @@ build-essential
 cmake
 python-dev
 python3-dev
-meld
-default-jdk
-python-setuptools
