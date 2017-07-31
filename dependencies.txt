@@ -6,6 +6,7 @@ meld
 default-jdk
 python
 python-setuptools
+python-pip
 nodejs
 nodejs-legacy
 
