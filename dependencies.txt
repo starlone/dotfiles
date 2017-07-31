@@ -1,19 +1,23 @@
 vim
 vim-gnome
 
-git
 meld
+terminator
+
+git
 default-jdk
+build-essential
+
 python
 python-setuptools
 python-pip
+
 nodejs
 nodejs-legacy
 
 curl
 exuberant-ctags
 ncurses-term
-build-essential
 cmake
 python-dev
 python3-dev

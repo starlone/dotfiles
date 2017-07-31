@@ -1,1 +1,12 @@
 npm
+yarn
+n
+gulp
+bower
+ionic
+eslint
+eslint-config-xo-space
+eslint-config-angular
+eslint-plugin-angular
+typescript
+
