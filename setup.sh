@@ -29,7 +29,9 @@ echo '
 - NodeJS
 ----------
 '
-sudo npm install -g npm n yarn
+sudo npm install -g npm
+sudo npm install -g n
+# Install last nodejs
 sudo n latest
 dep_nodejs=`cat dependencies-nodejs.txt`
 sudo npm install -g $dep_nodejs
