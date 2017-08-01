@@ -29,6 +29,14 @@ sudo npm install -g $dep_nodejs
 
 echo '
 ----------
+- Terminator
+----------
+'
+rm ~/.config/terminator/config
+ln -s ~/git/star.ubuntu-setup/terminator_config ~/.config/terminator/config
+
+echo '
+----------
 - VIM
 ----------
 '
@@ -47,3 +55,4 @@ cd ~/git/starlone.vim
 git pull
 vim +PlugUpgrade +qall
 vim +PlugUpdate +qall
+
