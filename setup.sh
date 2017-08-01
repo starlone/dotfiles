@@ -41,8 +41,11 @@ echo '
 - Terminator
 ----------
 '
-rm ~/.config/terminator/config
-ln -s ~/git/star.ubuntu-setup/terminator_config ~/.config/terminator/config
+
+if [ ! -d ~/.config/terminator ]; then
+    mkdir -p ~/.config/terminator
+fi
+ln -sf ~/git/star.ubuntu-setup/terminator_config ~/.config/terminator/config
 
 echo '
 ----------
