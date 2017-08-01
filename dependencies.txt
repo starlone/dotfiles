@@ -3,6 +3,7 @@ vim-gnome
 
 meld
 terminator
+pgadmin3
 
 git
 default-jdk

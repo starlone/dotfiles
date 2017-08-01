@@ -8,9 +8,11 @@ git pull
 sudo apt update
 sudo apt -y full-upgrade
 
-# ----------
-# Shell
-# ----------
+echo '
+----------
+- Shell
+----------
+'
 dependencies=`cat dependencies.txt`
 sudo apt install -y $dependencies
 
