@@ -1,5 +1,10 @@
 #!/bin/sh
 
+BASEDIR=$(dirname "$0")
+cd $BASEDIR
+
+git pull
+
 sudo apt update
 sudo apt -y full-upgrade
 

@@ -15,5 +15,4 @@ if [ ! -d star.ubuntu-setup ]; then
 fi
 
 cd star.ubuntu-setup
-git pull
 ./setup.sh
