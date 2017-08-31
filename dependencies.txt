@@ -4,6 +4,8 @@ vim-gnome
 meld
 terminator
 pgadmin3
+audacity
+blender
 
 git
 default-jdk
@@ -17,9 +19,10 @@ nodejs
 nodejs-legacy
 npm
 
-curl
 exuberant-ctags
 ncurses-term
 cmake
 python-dev
 python3-dev
+
+curl
