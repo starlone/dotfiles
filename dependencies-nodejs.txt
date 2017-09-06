@@ -9,4 +9,4 @@ eslint-config-xo-space
 eslint-config-angular
 eslint-plugin-angular
 typescript
-
+@angular/cli
