@@ -8,8 +8,10 @@ audacity
 blender
 
 git
-default-jdk
 build-essential
+
+default-jdk
+maven
 
 python
 python-setuptools
