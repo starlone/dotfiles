@@ -60,11 +60,11 @@ if [ ! -d ~/git/starlone.vim ]; then
     rm -rf .vimrc
     ln -s ~/git/starlone.vim/vimrc .vimrc
     vim +PlugInstall +qall
-    cd ~/.vim/plugged/YouCompleteMe
-    ./install.py --tern-completer
 fi
 cd ~/git/starlone.vim
 git pull
 vim +PlugUpgrade +qall
 vim +PlugUpdate +qall
+cd ~/.vim/plugged/YouCompleteMe
+./install.py --tern-completer
 

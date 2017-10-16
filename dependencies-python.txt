@@ -3,3 +3,4 @@ setuptools
 ipython<6
 ipdb
 Django
+virtualenv
