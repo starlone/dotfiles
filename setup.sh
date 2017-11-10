@@ -32,7 +32,7 @@ echo '
 sudo npm install -g npm
 sudo npm install -g n
 # Install last nodejs
-sudo n latest
+sudo n lts
 dep_nodejs=`cat dependencies-nodejs.txt`
 sudo npm install -g $dep_nodejs
 
