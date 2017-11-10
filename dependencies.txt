@@ -18,7 +18,6 @@ python-setuptools
 python-pip
 
 nodejs
-nodejs-legacy
 npm
 
 exuberant-ctags
