@@ -30,3 +30,7 @@ curl
 
 postgresql
 postgis
+
+lib32z1
+lib32ncurses5
+lib32stdc++6
