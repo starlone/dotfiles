@@ -1,5 +1,10 @@
 aptitude
 
+gnome-tweak-tool
+dconf-editor
+gnome-shell-extensions
+chrome-gnome-shell
+
 vim
 vim-gnome
 
