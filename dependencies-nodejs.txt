@@ -4,6 +4,7 @@ n
 gulp
 bower
 ionic
+cordova
 eslint
 eslint-config-xo-space
 eslint-config-angular
