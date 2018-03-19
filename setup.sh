@@ -74,7 +74,7 @@ taskvim(){
     vim +PlugUpgrade +qall
     vim +PlugUpdate +qall
     cd ~/.vim/plugged/YouCompleteMe
-    ./install.py --tern-completer --js-completer
+    ./install.py --tern-completer --js-completer --java-completer
 }
 
 if [ $# -eq 0 ]; then
