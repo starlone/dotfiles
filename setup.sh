@@ -24,7 +24,7 @@ taskpython(){
     ----------
     '
     dep_python=`cat dependencies-python.txt`
-    sudo easy_install -U $dep_python
+    sudo pip install $dep_python
 }
 
 tasknodejs(){
@@ -33,10 +33,10 @@ tasknodejs(){
     - NodeJS
     ----------
     '
-    sudo npm install -g npm
     sudo npm install -g n
     # Install last nodejs
-    sudo n lts
+    sudo n stable
+    sudo npm install -g npm
     dep_nodejs=`cat dependencies-nodejs.txt`
     sudo npm install -g $dep_nodejs
 }

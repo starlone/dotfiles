@@ -20,6 +20,9 @@ build-essential
 default-jdk
 maven
 
+virtualbox
+vagrant
+
 python
 python-setuptools
 python-pip
@@ -43,3 +46,8 @@ gradle
 lib32z1
 lib32ncurses5
 lib32stdc++6
+
+apt-transport-https
+ca-certificates
+software-properties-common
+
