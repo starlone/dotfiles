@@ -11,3 +11,6 @@ eslint-config-angular
 eslint-plugin-angular
 typescript
 @angular/cli
+yo
+generator-fountain-webapp
+ionic
