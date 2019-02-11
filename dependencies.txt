@@ -10,6 +10,9 @@ vim-gnome
 
 meld
 terminator
+pgadmin3
+audacity
+blender
 
 git
 build-essential
