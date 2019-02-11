@@ -35,7 +35,7 @@ tasknodejs(){
     '
     sudo npm install -g n
     # Install last nodejs
-    sudo n stable
+    sudo -E n stable
     sudo npm install -g npm
     dep_nodejs=`cat dependencies-nodejs.txt`
     sudo npm install -g $dep_nodejs

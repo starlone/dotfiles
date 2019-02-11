@@ -10,9 +10,6 @@ vim-gnome
 
 meld
 terminator
-pgadmin3
-audacity
-blender
 
 git
 build-essential
@@ -38,16 +35,3 @@ python3-dev
 xterm
 
 curl
-
-postgresql
-postgis
-
-gradle
-lib32z1
-lib32ncurses5
-lib32stdc++6
-
-apt-transport-https
-ca-certificates
-software-properties-common
-
