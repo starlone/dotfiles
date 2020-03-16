@@ -5,14 +5,13 @@ dconf-editor
 gnome-shell-extensions
 chrome-gnome-shell
 
+ncdu
+
 vim
 vim-gnome
 
 meld
 terminator
-pgadmin3
-audacity
-blender
 
 git
 build-essential
@@ -20,15 +19,9 @@ build-essential
 default-jdk
 maven
 
-virtualbox
-vagrant
-
 python
 python-setuptools
 python-pip
-
-nodejs
-npm
 
 exuberant-ctags
 ncurses-term

@@ -13,8 +13,7 @@ taskshell() {
     '
     sudo apt update
     sudo apt -y full-upgrade
-    dependencies=`cat dependencies.txt`
-    sudo apt install -y $dependencies
+    sudo apt install -y `cat dependencies.txt`
 }
 
 taskpython(){
@@ -23,8 +22,7 @@ taskpython(){
     - Python
     ----------
     '
-    dep_python=`cat dependencies-python.txt`
-    sudo pip install $dep_python
+    sudo -E pip install `cat dependencies-python.txt`
 }
 
 tasknodejs(){
@@ -33,12 +31,11 @@ tasknodejs(){
     - NodeJS
     ----------
     '
-    sudo npm install -g n
+    sudo -E npm install -g n
     # Install last nodejs
     sudo -E n stable
-    sudo npm install -g npm
-    dep_nodejs=`cat dependencies-nodejs.txt`
-    sudo npm install -g $dep_nodejs
+    sudo -E npm install -g npm
+    sudo -E npm install -g `cat dependencies-nodejs.txt`
 }
 
 taskterminator(){
@@ -47,11 +44,17 @@ taskterminator(){
     - Terminator
     ----------
     '
-
     if [ ! -d ~/.config/terminator ]; then
         mkdir -p ~/.config/terminator
     fi
     ln -sf ~/git/star.ubuntu-setup/terminator_config ~/.config/terminator/config
+
+    # Font
+    if [ ! -d ~/.fonts/Hack ]; then
+        mkdir -p .fonts/Hack && cd .fonts/Hack
+        wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Hack.zip
+        unzip Hack.zip
+    fi
 }
 
 taskvim(){
