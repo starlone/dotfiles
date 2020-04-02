@@ -80,6 +80,15 @@ taskvim(){
     ./install.py --tern-completer --js-completer --java-completer
 }
 
+tasktmux(){
+    echo '
+    ----------
+    - Tmux
+    ----------
+    '
+    ln -sf ~/git/star.ubuntu-setup/tmux.conf ~/.tmux.conf
+}
+
 if [ $# -eq 0 ]; then
     taskshell
     taskterminator
@@ -106,6 +115,9 @@ do
             ;;
         'vim')
             taskvim
+            ;;
+        'tmux')
+            tasktmux
             ;;
         *)
             echo "Não existe esta opção! " $PARAM "\n"
