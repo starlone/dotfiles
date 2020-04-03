@@ -29,7 +29,7 @@ taskterminator(){
 
     # Font
     if [ ! -d ~/.fonts/Hack ]; then
-        mkdir -p .fonts/Hack && cd .fonts/Hack
+        mkdir -p ~/.fonts/Hack && cd ~/.fonts/Hack
         wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Hack.zip
         unzip Hack.zip
     fi
