@@ -16,28 +16,6 @@ taskshell() {
     sudo apt install -y `cat dependencies.txt`
 }
 
-taskpython(){
-    echo '
-    ----------
-    - Python
-    ----------
-    '
-    sudo -E pip install `cat dependencies-python.txt`
-}
-
-tasknodejs(){
-    echo '
-    ----------
-    - NodeJS
-    ----------
-    '
-    sudo -E npm install -g n
-    # Install last nodejs
-    sudo -E n stable
-    sudo -E npm install -g npm
-    sudo -E npm install -g `cat dependencies-nodejs.txt`
-}
-
 taskterminator(){
     echo '
     ----------
@@ -55,23 +33,6 @@ taskterminator(){
         wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Hack.zip
         unzip Hack.zip
     fi
-}
-
-taskvim(){
-    echo '
-    ----------
-    - VIM
-    ----------
-    '
-    if [ ! -d ~/.vim ]; then
-        rm -rf ~/.vimrc
-        ln -s ~/git/dotfiles/vimrc ~/.vimrc
-        vim +PlugInstall +qall
-    fi
-    vim +PlugUpgrade +qall
-    vim +PlugUpdate +qall
-    cd ~/.vim/plugged/YouCompleteMe
-    ./install.py --tern-completer --js-completer --java-completer
 }
 
 tasktmux(){
@@ -113,14 +74,56 @@ taskfzf(){
     ~/.fzf/install --all
 }
 
+taskpython(){
+    echo '
+    ----------
+    - Python
+    ----------
+    '
+    sudo -E pip install `cat dependencies-python.txt`
+}
+
+tasknodejs(){
+    echo '
+    ----------
+    - NodeJS
+    ----------
+    '
+    if [ ! -d ~/.nvm ]; then
+        wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash        
+    fi
+    # sudo -E npm install -g n
+    # Install last nodejs
+    # sudo -E n stable
+    # sudo -E npm install -g npm
+    # sudo -E npm install -g `cat dependencies-nodejs.txt`
+}
+
+taskvim(){
+    echo '
+    ----------
+    - VIM
+    ----------
+    '
+    if [ ! -d ~/.vim ]; then
+        rm -rf ~/.vimrc
+        ln -s ~/git/dotfiles/vimrc ~/.vimrc
+        vim +PlugInstall +qall
+    fi
+    vim +PlugUpgrade +qall
+    vim +PlugUpdate +qall
+    cd ~/.vim/plugged/YouCompleteMe
+    ./install.py --tern-completer --js-completer --java-completer
+}
+
 if [ $# -eq 0 ]; then
     taskshell
     taskterminator
-    taskpython
-    tasknodejs
     tasktmux
     taskzsh
     taskfzf
+    taskpython
+    tasknodejs
     taskvim
 fi
 
@@ -131,17 +134,8 @@ do
         'shell')
             taskshell
             ;;
-        'python')
-            taskpython
-            ;;
-        'nodejs')
-            tasknodejs
-            ;;
         'terminator')
             taskterminator
-            ;;
-        'vim')
-            taskvim
             ;;
         'tmux')
             tasktmux
@@ -151,6 +145,15 @@ do
             ;;
         'fzf')
             taskfzf
+            ;;
+        'python')
+            taskpython
+            ;;
+        'nodejs')
+            tasknodejs
+            ;;
+        'vim')
+            taskvim
             ;;
         *)
             echo "Não existe esta opção! " $PARAM "\n"
