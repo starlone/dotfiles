@@ -76,6 +76,7 @@ plugins=(
     docker
     docker-compose
     systemd
+    bgnotify
 )
 
 source $ZSH/oh-my-zsh.sh
