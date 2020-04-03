@@ -90,13 +90,17 @@ tasknodejs(){
     ----------
     '
     if [ ! -d ~/.nvm ]; then
-        wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash        
+        echo 'Install NVM'
+        wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
     fi
-    # sudo -E npm install -g n
-    # Install last nodejs
-    # sudo -E n stable
-    # sudo -E npm install -g npm
-    # sudo -E npm install -g `cat dependencies-nodejs.txt`
+
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+    nvm install node
+    npm install -g npm
+    npm install -g `cat dependencies-nodejs.txt`
 }
 
 taskvim(){
