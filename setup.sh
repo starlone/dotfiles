@@ -89,12 +89,31 @@ tasktmux(){
     ln -sf ~/git/star.ubuntu-setup/tmux.conf ~/.tmux.conf
 }
 
+taskzsh(){
+    echo '
+    ----------
+    - Zsh
+    ----------
+    '
+    if [ ! -d ~/.oh-my-zsh ]; then
+        echo 'Instalando Oh My Zsh'
+        sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    fi
+    if [ ! -d ~/.zinit ]; then
+        echo 'Instalando Zinit'
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
+    fi
+    ln -sf ~/git/star.ubuntu-setup/zshrc ~/.zshrc
+}
+
 if [ $# -eq 0 ]; then
     taskshell
     taskterminator
     taskpython
     tasknodejs
     taskvim
+    tasktmux
+    taskzsh
 fi
 
 for PARAM in $*
@@ -118,6 +137,9 @@ do
             ;;
         'tmux')
             tasktmux
+            ;;
+        'zsh')
+            taskzsh
             ;;
         *)
             echo "Não existe esta opção! " $PARAM "\n"
