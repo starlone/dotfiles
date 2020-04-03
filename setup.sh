@@ -106,14 +106,28 @@ taskzsh(){
     ln -sf ~/git/star.ubuntu-setup/zshrc ~/.zshrc
 }
 
+taskfzf(){
+    echo '
+    ----------
+    - FZF
+    ----------
+    '
+    if [ ! -d ~/.fzf ]; then
+        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    fi
+    git -C ~/.fzf pull
+    ~/.fzf/install --all
+}
+
 if [ $# -eq 0 ]; then
     taskshell
     taskterminator
     taskpython
     tasknodejs
-    taskvim
     tasktmux
     taskzsh
+    taskfzf
+    taskvim
 fi
 
 for PARAM in $*
@@ -140,6 +154,9 @@ do
             ;;
         'zsh')
             taskzsh
+            ;;
+        'fzf')
+            taskfzf
             ;;
         *)
             echo "Não existe esta opção! " $PARAM "\n"

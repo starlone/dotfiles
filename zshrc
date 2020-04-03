@@ -122,3 +122,6 @@ autoload -Uz _zinit
 
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 zinit light zsh-users/zsh-autosuggestions
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
