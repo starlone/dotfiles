@@ -47,7 +47,7 @@ taskterminator(){
     if [ ! -d ~/.config/terminator ]; then
         mkdir -p ~/.config/terminator
     fi
-    ln -sf ~/git/star.ubuntu-setup/terminator_config ~/.config/terminator/config
+    ln -sf ~/git/dotfiles/terminator_config ~/.config/terminator/config
 
     # Font
     if [ ! -d ~/.fonts/Hack ]; then
@@ -64,10 +64,8 @@ taskvim(){
     ----------
     '
     mkdir -p ~/git
-    cd ~/git
     if [ ! -d ~/git/starlone.vim ]; then
-        git clone https://github.com/starlone/starlone.vim.git
-        cd ~/
+        git clone https://github.com/starlone/starlone.vim.git ~/git/starlone.vim
         rm -rf .vimrc
         ln -s ~/git/starlone.vim/vimrc .vimrc
         vim +PlugInstall +qall
@@ -86,7 +84,7 @@ tasktmux(){
     - Tmux
     ----------
     '
-    ln -sf ~/git/star.ubuntu-setup/tmux.conf ~/.tmux.conf
+    ln -sf ~/git/dotfiles/tmux.conf ~/.tmux.conf
 }
 
 taskzsh(){
@@ -103,7 +101,7 @@ taskzsh(){
         echo 'Instalando Zinit'
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
     fi
-    ln -sf ~/git/star.ubuntu-setup/zshrc ~/.zshrc
+    ln -sf ~/git/dotfiles/zshrc ~/.zshrc
 }
 
 taskfzf(){

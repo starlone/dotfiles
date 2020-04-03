@@ -1,4 +1,4 @@
-# star.ubuntu-setup
+# DotFiles
 
 Minhas configurações iniciais para Ubuntu
 
