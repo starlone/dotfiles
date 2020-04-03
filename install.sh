@@ -63,15 +63,11 @@ taskvim(){
     - VIM
     ----------
     '
-    mkdir -p ~/git
-    if [ ! -d ~/git/starlone.vim ]; then
-        git clone https://github.com/starlone/starlone.vim.git ~/git/starlone.vim
-        rm -rf .vimrc
-        ln -s ~/git/starlone.vim/vimrc .vimrc
+    if [ ! -d ~/.vim ]; then
+        rm -rf ~/.vimrc
+        ln -s ~/git/dotfiles/vimrc ~/.vimrc
         vim +PlugInstall +qall
     fi
-    cd ~/git/starlone.vim
-    git pull
     vim +PlugUpgrade +qall
     vim +PlugUpdate +qall
     cd ~/.vim/plugged/YouCompleteMe
