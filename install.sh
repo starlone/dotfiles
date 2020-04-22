@@ -25,7 +25,7 @@ taskterminator(){
     if [ ! -d ~/.config/terminator ]; then
         mkdir -p ~/.config/terminator
     fi
-    ln -sf ~/git/dotfiles/terminator_config ~/.config/terminator/config
+    ln -sf $BASEDIR/terminator_config ~/.config/terminator/config
 
     # Font
     if [ ! -d ~/.fonts/Hack ]; then
@@ -41,7 +41,7 @@ tasktmux(){
     - Tmux
     ----------
     '
-    ln -sf ~/git/dotfiles/tmux.conf ~/.tmux.conf
+    ln -sf $BASEDIR/tmux.conf ~/.tmux.conf
 }
 
 taskzsh(){
@@ -58,7 +58,7 @@ taskzsh(){
         echo 'Instalando Zinit'
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
     fi
-    ln -sf ~/git/dotfiles/zshrc ~/.zshrc
+    ln -sf $BASEDIR/zshrc ~/.zshrc
 }
 
 taskfzf(){
@@ -109,13 +109,16 @@ taskvim(){
     - VIM
     ----------
     '
+    rm -rf ~/.vimrc
+    ln -s $BASEDIR/vimrc ~/.vimrc
+
     if [ ! -d ~/.vim ]; then
-        rm -rf ~/.vimrc
-        ln -s ~/git/dotfiles/vimrc ~/.vimrc
         vim +PlugInstall +qall
     fi
+
     vim +PlugUpgrade +qall
     vim +PlugUpdate +qall
+
     cd ~/.vim/plugged/YouCompleteMe
     ./install.py --tern-completer --js-completer --java-completer
 }
