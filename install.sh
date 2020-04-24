@@ -13,7 +13,8 @@ taskshell() {
     '
     sudo apt update
     sudo apt -y full-upgrade
-    sudo apt install -y `cat dependencies.txt`
+    sudo apt install -y aptitude
+    sudo aptitude install -y `cat dependencies.txt`
 }
 
 taskterminator(){
