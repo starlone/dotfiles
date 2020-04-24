@@ -17,6 +17,12 @@ taskshell() {
     sudo aptitude install -y `cat dependencies.txt`
 }
 
+tasksnap() {
+    sudo snap refresh
+    sudo snap install `cat dependencies-snap.txt`
+    sudo snap install code --classic
+}
+
 taskterminator(){
     echo '
     ----------
@@ -81,7 +87,7 @@ taskpython(){
     - Python
     ----------
     '
-    sudo -E pip install `cat dependencies-python.txt`
+    sudo -E pip3 install `cat dependencies-python.txt`
 }
 
 tasknodejs(){
@@ -141,6 +147,9 @@ do
 
         'shell')
             taskshell
+            ;;
+        'snap')
+            tasksnap
             ;;
         'terminator')
             taskterminator

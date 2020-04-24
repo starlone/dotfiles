@@ -1,7 +1,5 @@
 aptitude
 
-chromium-browser
-
 gnome-tweak-tool
 dconf-editor
 gnome-shell-extensions
@@ -29,7 +27,6 @@ python3-setuptools
 python3-pip
 python3-dev
 
-docker.io
 docker-compose
 
 exuberant-ctags
