@@ -132,6 +132,7 @@ taskvim(){
 
 if [ $# -eq 0 ]; then
     taskshell
+    tasksnap
     taskterminator
     tasktmux
     taskzsh
