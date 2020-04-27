@@ -19,7 +19,7 @@ taskshell() {
 
 tasksnap() {
     sudo snap refresh
-    sudo snap install `cat dependencies-snap.txt`
+    sudo snap install docker
     sudo snap install code --classic
 
     sudo gpasswd -a $USER docker
