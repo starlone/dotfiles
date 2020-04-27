@@ -40,3 +40,4 @@ cmake
 xterm
 
 curl
+ssh
