@@ -29,6 +29,7 @@ python3-setuptools
 python3-pip
 python3-dev
 
+docker.io
 docker-compose
 
 mysql-client
