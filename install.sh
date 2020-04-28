@@ -33,7 +33,7 @@ taskterminator(){
     if [ ! -d ~/.config/terminator ]; then
         mkdir -p ~/.config/terminator
     fi
-    ln -sf $BASEDIR/terminator_config ~/.config/terminator/config
+    ln -sf $PWD/terminator_config ~/.config/terminator/config
 
     # Font
     if [ ! -d ~/.fonts/Hack ]; then
@@ -106,7 +106,7 @@ tasknodejs(){
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-    nvm install node
+    nvm install --lts
     npm install -g npm
     npm install -g `cat dependencies-nodejs.txt`
 }
