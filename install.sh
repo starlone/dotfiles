@@ -15,13 +15,14 @@ taskshell() {
     sudo apt -y full-upgrade
     sudo apt install -y aptitude
     sudo aptitude install -y `cat dependencies.txt`
+
+    sudo gpasswd -a $USER docker
 }
 
 tasksnap() {
     sudo snap refresh
     sudo snap install code --classic
-
-    sudo gpasswd -a $USER docker
+    sudo snap install gitkraken --classic
 }
 
 taskterminator(){
