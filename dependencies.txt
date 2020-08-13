@@ -42,3 +42,4 @@ xterm
 curl
 ssh
 net-tools
+sshfs

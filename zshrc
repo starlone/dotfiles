@@ -77,6 +77,8 @@ plugins=(
     docker-compose
     systemd
     bgnotify
+    python
+    pipenv
 )
 
 source $ZSH/oh-my-zsh.sh
