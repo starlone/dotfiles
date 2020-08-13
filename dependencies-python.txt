@@ -1,5 +1,7 @@
 pip
 setuptools
-ipython<6
+ipython
+bpython
 ipdb
 virtualenv
+pipenv

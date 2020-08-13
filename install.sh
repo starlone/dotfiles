@@ -89,7 +89,7 @@ taskpython(){
     - Python
     ----------
     '
-    sudo -E pip3 install `cat dependencies-python.txt`
+    sudo -E pip3 install --upgrade -r dependencies-python.txt
 }
 
 tasknodejs(){
