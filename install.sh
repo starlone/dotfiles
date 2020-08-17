@@ -22,7 +22,6 @@ taskshell() {
 tasksnap() {
     sudo snap refresh
     sudo snap install code --classic
-    sudo snap install gitkraken --classic
 }
 
 taskterminator(){
