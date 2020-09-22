@@ -37,7 +37,6 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'Valloric/YouCompleteMe'
 Plug 'scrooloose/nerdtree'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'scrooloose/syntastic'
 Plug 'sheerun/vim-polyglot'
 Plug 'airblade/vim-gitgutter'
 Plug 'bronson/vim-trailing-whitespace'
@@ -46,7 +45,6 @@ Plug 'tpope/vim-commentary'
 Plug 'vim-scripts/grep.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
-Plug 'honza/vim-snippets'
 
 " HTML
 Plug 'mattn/emmet-vim'
@@ -54,6 +52,10 @@ Plug 'Valloric/MatchTagAlways'
 
 "" Postgresql/Mysql
 Plug 'ivalkeen/vim-simpledb'
+
+"" Snippets
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 call plug#end()
 
@@ -72,7 +74,7 @@ set fileencodings=ucs-bom,utf8,latin1
 "" Fix backspace indent
 set backspace=indent,eol,start
 
-"" Tabs. May be overriten by autocmd rules
+"" Tabs. May be overridden by autocmd rules
 set tabstop=4
 set softtabstop=0
 set shiftwidth=4
@@ -251,21 +253,6 @@ nnoremap <leader>yu :YcmCompleter FixIt<CR>
 "*****************************************************************************
 " Plugins Setup
 "*****************************************************************************
-" syntastic
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-let g:syntastic_python_checkers=['python', 'flake8']
-let g:syntastic_python_flake8_post_args='--ignore=W391'
-
-let g:javascript_enable_domhtmlcss = 1
-let g:syntastic_javascript_checkers = ['eslint']
-
-" Java disabled because use YouCompleteMe with jdt.ls
-let g:syntastic_java_checkers = []
-
 " YCM YouCompleteME
 let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
 
@@ -306,7 +293,6 @@ endif
 let g:airline_theme = 'luna'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#branch#enabled=1
-let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
 
 if !exists('g:airline_symbols')
