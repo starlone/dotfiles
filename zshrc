@@ -83,6 +83,9 @@ plugins=(
     bgnotify
     python
     pipenv
+    node
+    npm
+    nvm
 )
 
 source $ZSH/oh-my-zsh.sh
