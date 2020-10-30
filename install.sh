@@ -33,14 +33,7 @@ taskterminator(){
     if [ ! -d ~/.config/terminator ]; then
         mkdir -p ~/.config/terminator
     fi
-    ln -sf $PWD/terminator_config ~/.config/terminator/config
-
-    # Font
-    if [ ! -d ~/.fonts/Hack ]; then
-        mkdir -p ~/.fonts/Hack && cd ~/.fonts/Hack
-        wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Hack.zip
-        unzip Hack.zip
-    fi
+    ln -sf $BASEDIR/terminator_config ~/.config/terminator/config
 }
 
 tasktmux(){
@@ -67,6 +60,7 @@ taskzsh(){
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
     fi
     ln -sf $BASEDIR/zshrc ~/.zshrc
+    ln -sf $BASEDIR/p10k.zsh ~/.p10k.zsh
 }
 
 taskfzf(){
