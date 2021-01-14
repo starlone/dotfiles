@@ -79,6 +79,7 @@ plugins=(
     git
     docker
     docker-compose
+    docker-machine
     systemd
     bgnotify
     python
