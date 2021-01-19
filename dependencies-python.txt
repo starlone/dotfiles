@@ -3,5 +3,4 @@ setuptools
 ipython
 bpython
 ipdb
-virtualenv
 pipenv
