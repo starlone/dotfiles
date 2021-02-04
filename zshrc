@@ -80,6 +80,7 @@ plugins=(
     docker
     docker-compose
     docker-machine
+    kubectl
     systemd
     bgnotify
     python

@@ -33,7 +33,7 @@ taskterminator(){
     if [ ! -d ~/.config/terminator ]; then
         mkdir -p ~/.config/terminator
     fi
-    ln -sf $BASEDIR/terminator_config ~/.config/terminator/config
+    ln -sf $PWD/terminator_config ~/.config/terminator/config
 }
 
 tasktmux(){
