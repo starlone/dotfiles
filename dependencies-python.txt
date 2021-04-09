@@ -4,3 +4,4 @@ ipython
 bpython
 ipdb
 pipenv
+autopep8
