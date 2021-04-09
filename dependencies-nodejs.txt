@@ -1,16 +1,4 @@
 npm
 yarn
-n
-gulp
-bower
-ionic
-cordova
-eslint
-eslint-config-xo-space
-eslint-config-angular
-eslint-plugin-angular
 typescript
 @angular/cli
-yo
-generator-fountain-webapp
-ionic
