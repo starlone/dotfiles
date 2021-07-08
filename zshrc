@@ -88,6 +88,7 @@ plugins=(
     node
     npm
     nvm
+    rsync
 )
 
 source $ZSH/oh-my-zsh.sh
