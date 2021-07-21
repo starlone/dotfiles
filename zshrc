@@ -118,6 +118,7 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias sethttp="http_proxy=http://localhost:3128;https_proxy=http://localhost:3128;ftp_proxy=http://localhost:3128; export http_proxy https_proxy ftp_proxy"
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
