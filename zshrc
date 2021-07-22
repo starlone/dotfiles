@@ -89,6 +89,7 @@ plugins=(
     npm
     nvm
     rsync
+    pyenv
 )
 
 source $ZSH/oh-my-zsh.sh

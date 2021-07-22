@@ -76,6 +76,22 @@ taskfzf(){
     ~/.fzf/install --all
 }
 
+taskpyenv(){
+    echo '
+    ----------
+    - PyEnv
+    ----------
+    '
+    if [ ! -d ~/.pyenv ]; then
+        echo 'Instalando PyEnv'
+        git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+    fi
+    cd ~/.pyenv
+    git pull
+    src/configure && make -C src
+    cd -
+}
+
 taskpython(){
     echo '
     ----------
@@ -132,6 +148,7 @@ if [ $# -eq 0 ]; then
     tasktmux
     taskzsh
     taskfzf
+    taskpyenv
     taskpython
     tasknodejs
     taskvim
@@ -158,6 +175,9 @@ do
             ;;
         'fzf')
             taskfzf
+            ;;
+        'pyenv')
+            taskpyenv
             ;;
         'python')
             taskpython
