@@ -5,12 +5,17 @@ cd $BASEDIR
 
 git pull
 
-taskshell() {
+echo_title() {
     echo '
     ----------
-    - Shell
+    - ' $1 '
     ----------
     '
+}
+
+taskshell() {
+    echo_title 'Shell'
+    
     sudo apt update
     sudo apt -y full-upgrade
     sudo apt install -y aptitude
@@ -25,11 +30,8 @@ tasksnap() {
 }
 
 taskterminator(){
-    echo '
-    ----------
-    - Terminator
-    ----------
-    '
+    echo_title 'Terminator'
+
     if [ ! -d ~/.config/terminator ]; then
         mkdir -p ~/.config/terminator
     fi
@@ -37,20 +39,14 @@ taskterminator(){
 }
 
 tasktmux(){
-    echo '
-    ----------
-    - Tmux
-    ----------
-    '
+    echo_title 'Tmux'
+
     ln -sf $BASEDIR/tmux.conf ~/.tmux.conf
 }
 
 taskzsh(){
-    echo '
-    ----------
-    - Zsh
-    ----------
-    '
+    echo_title 'Zsh'
+
     if [ ! -d ~/.oh-my-zsh ]; then
         echo 'Instalando Oh My Zsh'
         sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -64,11 +60,8 @@ taskzsh(){
 }
 
 taskfzf(){
-    echo '
-    ----------
-    - FZF
-    ----------
-    '
+    echo_title 'FZF'
+    
     if [ ! -d ~/.fzf ]; then
         git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     fi
@@ -77,11 +70,8 @@ taskfzf(){
 }
 
 taskpyenv(){
-    echo '
-    ----------
-    - PyEnv
-    ----------
-    '
+    echo_title 'PyEnv'
+
     if [ ! -d ~/.pyenv ]; then
         echo 'Instalando PyEnv'
         git clone https://github.com/pyenv/pyenv.git ~/.pyenv
@@ -93,20 +83,14 @@ taskpyenv(){
 }
 
 taskpython(){
-    echo '
-    ----------
-    - Python
-    ----------
-    '
+    echo_title 'Python'
+
     sudo -E pip3 install --upgrade -r dependencies-python.txt
 }
 
 tasknodejs(){
-    echo '
-    ----------
-    - NodeJS
-    ----------
-    '
+    echo_title 'NodeJS'
+
     if [ ! -d ~/.nvm ]; then
         echo 'Install NVM'
         wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
@@ -122,11 +106,8 @@ tasknodejs(){
 }
 
 taskvim(){
-    echo '
-    ----------
-    - VIM
-    ----------
-    '
+    echo_title 'VIM'
+
     rm -rf ~/.vimrc
     ln -s $BASEDIR/vimrc ~/.vimrc
 
