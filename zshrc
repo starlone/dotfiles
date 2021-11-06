@@ -27,6 +27,8 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init --path)"
 
+export PATH=${PATH}:$HOME/Android/Sdk/platform-tools/
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -94,6 +96,7 @@ plugins=(
     nvm
     rsync
     pyenv
+    adb
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -123,7 +126,7 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias sethttp="http_proxy=http://localhost:3128;https_proxy=http://localhost:3128;ftp_proxy=http://localhost:3128; export http_proxy https_proxy ftp_proxy"
+alias sethttp="http_proxy=http://localhost:3128;https_proxy=http://localhost:3128;ftp_proxy=http://localhost:3128;no_proxy='localhost,127.0.0.1' export http_proxy https_proxy ftp_proxy no_proxy"
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
