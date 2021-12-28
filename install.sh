@@ -15,7 +15,7 @@ echo_title() {
 
 taskshell() {
     echo_title 'Shell'
-    
+
     sudo apt update
     sudo apt -y full-upgrade
     sudo apt install -y aptitude
@@ -51,9 +51,9 @@ taskzsh(){
         echo 'Instalando Oh My Zsh'
         sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     fi
-    if [ ! -d ~/.zinit ]; then
+    if [ ! -d~/.local/share/zinit/zinit.git  ]; then
         echo 'Instalando Zinit'
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
+        sh -c "$(curl -fsSL https://git.io/zinit-install)"
     fi
     ln -sf $BASEDIR/zshrc ~/.zshrc
     ln -sf $BASEDIR/p10k.zsh ~/.p10k.zsh
@@ -61,7 +61,7 @@ taskzsh(){
 
 taskfzf(){
     echo_title 'FZF'
-    
+
     if [ ! -d ~/.fzf ]; then
         git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     fi
