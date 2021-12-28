@@ -51,7 +51,7 @@ taskzsh(){
         echo 'Instalando Oh My Zsh'
         sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     fi
-    if [ ! -d~/.local/share/zinit/zinit.git  ]; then
+    if [ ! -d ~/.local/share/zinit/zinit.git  ]; then
         echo 'Instalando Zinit'
         sh -c "$(curl -fsSL https://git.io/zinit-install)"
     fi
