@@ -97,6 +97,7 @@ plugins=(
     rsync
     pyenv
     adb
+    copypath
 )
 
 source $ZSH/oh-my-zsh.sh
