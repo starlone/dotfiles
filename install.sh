@@ -122,6 +122,15 @@ taskvim(){
     ./install.py --ts-completer --java-completer
 }
 
+taskvscode() {
+    echo_title 'VSCode'
+
+    for extension in `cat dependencies-vscode.txt`
+    do
+        code --install-extension $extension
+    done
+}
+
 if [ $# -eq 0 ]; then
     taskshell
     tasksnap
@@ -133,6 +142,7 @@ if [ $# -eq 0 ]; then
     taskpython
     tasknodejs
     taskvim
+    taskvscode
 fi
 
 for PARAM in $*
@@ -168,6 +178,9 @@ do
             ;;
         'vim')
             taskvim
+            ;;
+        'vscode')
+            taskvscode
             ;;
         *)
             echo "Não existe esta opção! " $PARAM "\n"

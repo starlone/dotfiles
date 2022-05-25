@@ -1,0 +1,8 @@
+MS-CEINTL.vscode-language-pack-pt-BR
+dracula-theme.theme-dracula
+ms-python.python
+vscjava.vscode-java-pack
+ms-azuretools.vscode-docker
+EditorConfig.EditorConfig
+SonarSource.sonarlint-vscode
+eamodio.gitlens
