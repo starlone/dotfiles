@@ -6,3 +6,4 @@ ms-azuretools.vscode-docker
 EditorConfig.EditorConfig
 SonarSource.sonarlint-vscode
 eamodio.gitlens
+esbenp.prettier-vscode
