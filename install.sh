@@ -120,6 +120,7 @@ taskvim(){
 
     cd ~/.vim/plugged/YouCompleteMe
     ./install.py --ts-completer --java-completer
+    cd -
 }
 
 taskvscode() {

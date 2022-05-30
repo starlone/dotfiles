@@ -8,3 +8,4 @@ SonarSource.sonarlint-vscode
 eamodio.gitlens
 esbenp.prettier-vscode
 VisualStudioExptTeam.intellicode-api-usage-examples
+redhat.vscode-quarkus
