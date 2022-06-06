@@ -10,3 +10,4 @@ VisualStudioExptTeam.intellicode-api-usage-examples
 redhat.vscode-quarkus
 redhat.vscode-xml
 JuanBlanco.solidity
+humao.rest-client
