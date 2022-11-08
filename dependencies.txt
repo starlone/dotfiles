@@ -5,8 +5,6 @@ dconf-editor
 gnome-shell-extensions
 chrome-gnome-shell
 
-gnome-shell-extension-system-monitor
-
 ncdu
 
 tmux
