@@ -11,6 +11,7 @@ git
 build-essential
 
 default-jdk
+openjdk-19-jdk
 maven
 
 python-is-python3
