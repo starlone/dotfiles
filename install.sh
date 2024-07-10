@@ -24,11 +24,6 @@ taskshell() {
     sudo gpasswd -a $USER docker
 }
 
-tasksnap() {
-    sudo snap refresh
-    sudo snap install code --classic
-}
-
 taskterminator(){
     echo_title 'Terminator'
 
@@ -151,9 +146,6 @@ do
 
         'shell')
             taskshell
-            ;;
-        'snap')
-            tasksnap
             ;;
         'terminator')
             taskterminator
