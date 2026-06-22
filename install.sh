@@ -53,11 +53,12 @@ detect_os() {
         *)
             echo "unknown" ;;
     esac
-}    
+}
+
+OS_ID=$(detect_os)
 
 taskshell() {
     echo_title 'Shell'
-    OS_ID=$(detect_os)
     case "$OS_ID" in
         macos)
             install_dependencies_brew
@@ -101,7 +102,6 @@ install_dependencies_apt() {
 install_dependencies_zypper() {
     sudo zypper refresh
     sudo zypper update -y
-    sudo zypper install -y aptitude || true
     DEPFILE="dependencies-suse.txt"
     [ -f "$DEPFILE" ] && sudo zypper install -y $(cat "$DEPFILE")
     sudo usermod -aG docker $USER
@@ -162,10 +162,7 @@ taskpyenv(){
         echo 'Instalando PyEnv'
         git clone https://github.com/pyenv/pyenv.git ~/.pyenv
     fi
-    cd ~/.pyenv
-    git pull
-    src/configure && make -C src
-    cd -
+    ( cd ~/.pyenv && git pull && src/configure && make -C src )
 }
 
 taskpython(){
@@ -185,7 +182,7 @@ tasknodejs(){
 
     nvm install --lts
     npm install -g npm
-    npm install -g `cat dependencies-nodejs.txt`
+    npm install -g $(cat dependencies-nodejs.txt)
 }
 
 taskvim(){
@@ -200,15 +197,13 @@ taskvim(){
     vim +PlugUpgrade +qall
     vim +PlugUpdate +qall
 
-    cd ~/.vim/plugged/YouCompleteMe
-    ./install.py --ts-completer --java-completer
-    cd -
+    ( cd ~/.vim/plugged/YouCompleteMe && ./install.py --ts-completer --java-completer )
 }
 
 taskvscode() {
     echo_title 'VSCode'
 
-    for extension in `cat dependencies-vscode.txt`
+    for extension in $(cat dependencies-vscode.txt)
     do
         code --install-extension $extension
     done
@@ -229,7 +224,17 @@ taskgnome(){
     fi
 
     DEPFILE="dependencies-gnome.txt"
-    [ -f "$DEPFILE" ] && sudo apt install -y $(cat "$DEPFILE")
+    case "$OS_ID" in
+        macos)
+            [ -f "$DEPFILE" ] && xargs brew install < "$DEPFILE"
+            ;;
+        suse)
+            [ -f "$DEPFILE" ] && sudo zypper install -y $(cat "$DEPFILE")
+            ;;
+        *)
+            [ -f "$DEPFILE" ] && sudo apt install -y $(cat "$DEPFILE")
+            ;;
+    esac
 }
 
 tasksdkman(){
@@ -261,7 +266,7 @@ if [ $# -eq 0 ]; then
     taskgnome
 fi
 
-for PARAM in $*
+for PARAM in "$@"
 do
     case $PARAM in
 
