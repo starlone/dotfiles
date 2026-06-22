@@ -31,6 +31,7 @@ cd ~/dotfiles
 | `vim` | Configuração + plugins via vim-plug |
 | `vscode` | Extensões (dependencies-vscode.txt) |
 | `sdkman` | SDKMAN! para SDKs Java/Kotlin/Scala |
+| `gnome` | Tweaks e extensões GNOME (detectado automaticamente) |
 
 ## Uso seletivo
 
