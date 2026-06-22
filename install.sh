@@ -214,6 +214,24 @@ taskvscode() {
     done
 }
 
+is_gnome() {
+    echo "${XDG_CURRENT_DESKTOP:-}" | grep -qi gnome && return 0
+    command -v gnome-shell >/dev/null 2>&1 && return 0
+    return 1
+}
+
+taskgnome(){
+    echo_title 'GNOME'
+
+    if ! is_gnome; then
+        echo "GNOME não detectado, pulando."
+        return
+    fi
+
+    DEPFILE="dependencies-gnome.txt"
+    [ -f "$DEPFILE" ] && sudo apt install -y $(cat "$DEPFILE")
+}
+
 tasksdkman(){
     echo_title 'SDKMAN!'
     export SDKMAN_DIR="$HOME/.sdkman"
@@ -240,6 +258,7 @@ if [ $# -eq 0 ]; then
     taskvim
     taskvscode
     tasksdkman
+    taskgnome
 fi
 
 for PARAM in $*
@@ -278,6 +297,9 @@ do
             ;;
         'sdkman')
             tasksdkman
+            ;;
+        'gnome')
+            taskgnome
             ;;
         *)
             echo "Não existe esta opção! " $PARAM "\n"
