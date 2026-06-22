@@ -171,8 +171,10 @@ taskpython(){
     eval "$(pyenv init --path)"
 
     if [ "$(pyenv global 2>/dev/null)" = "system" ]; then
-        echo "Configure uma versão Python no pyenv antes de continuar: pyenv install <version> && pyenv global <version>"
-        return 1
+        LATEST=$(pyenv install --list | grep -E '^\s+3\.[0-9]+\.[0-9]+$' | tail -1 | tr -d ' ')
+        echo "Instalando Python $LATEST via pyenv..."
+        pyenv install --skip-existing "$LATEST"
+        pyenv global "$LATEST"
     fi
 
     pip3 install --upgrade -r dependencies-python.txt
