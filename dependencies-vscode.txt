@@ -8,4 +8,3 @@ eamodio.gitlens
 redhat.vscode-quarkus
 redhat.vscode-xml
 humao.rest-client
-NomicFoundation.hardhat-solidity

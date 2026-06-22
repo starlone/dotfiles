@@ -1,0 +1,13 @@
+cmake
+python@3
+pyenv
+curl
+git
+zsh
+tmux
+fzf
+vim
+node
+npm
+docker
+bash

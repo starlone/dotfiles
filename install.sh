@@ -13,30 +13,112 @@ echo_title() {
     '
 }
 
+# Função auxiliar para criar links simbólicos de forma idempotente e segura
+create_symlink() {
+    SRC="$1"
+    DEST="$2"
+    if [ -L "$DEST" ]; then
+        # Se já é link e aponta para o destino correto, não faz nada
+        if [ "$(readlink "$DEST")" = "$SRC" ]; then
+            return
+        fi
+        rm -f "$DEST"
+    elif [ -e "$DEST" ]; then
+        # Se é arquivo normal, faz backup antes de remover
+        mv "$DEST" "$DEST.bak.$(date +%s)"
+    fi
+    ln -sf "$SRC" "$DEST"
+}
+
+# Detecta o sistema operacional
+detect_os() {
+    case "$(uname)" in
+        Darwin)
+            echo "macos" ;;
+        Linux)
+            if [ -f /etc/os-release ]; then
+                . /etc/os-release
+                case "$ID" in
+                    opensuse*|sles|suse)
+                        echo "suse" ;;
+                    ubuntu|debian)
+                        echo "debian" ;;
+                    *)
+                        echo "linux" ;;
+                esac
+            else
+                echo "linux"
+            fi
+            ;;
+        *)
+            echo "unknown" ;;
+    esac
+}    
+
 taskshell() {
     echo_title 'Shell'
+    OS_ID=$(detect_os)
+    case "$OS_ID" in
+        macos)
+            install_dependencies_brew
+            ;;
+        debian|linux)
+            install_dependencies_apt
+            ;;
+        suse)
+            install_dependencies_zypper
+            ;;
+        *)
+            echo "Sistema operacional não suportado para instalação automática de dependências."
+            ;;
+    esac
+}
 
+# Instala dependências via Homebrew (macOS)
+install_dependencies_brew() {
+    if ! command -v brew >/dev/null 2>&1; then
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+    echo "Instalando dependências do Homebrew..."
+    brew update
+    brew upgrade
+    DEPFILE="dependencies-macos.txt"
+    [ -f "$DEPFILE" ] && xargs brew install < "$DEPFILE"
+    sudo dseditgroup -o edit -a $USER -t user docker 2>/dev/null || true
+}
+
+# Instala dependências via apt/aptitude (Debian/Ubuntu)
+install_dependencies_apt() {
     sudo apt update
     sudo apt -y full-upgrade
     sudo apt install -y aptitude
-    sudo aptitude install -y `cat dependencies.txt`
-
+    DEPFILE="dependencies-ubuntu.txt"
+    [ -f "$DEPFILE" ] && sudo aptitude install -y $(cat "$DEPFILE")
     sudo gpasswd -a $USER docker
 }
 
+# Instala dependências via zypper (SUSE)
+install_dependencies_zypper() {
+    sudo zypper refresh
+    sudo zypper update -y
+    sudo zypper install -y aptitude || true
+    DEPFILE="dependencies-suse.txt"
+    [ -f "$DEPFILE" ] && sudo zypper install -y $(cat "$DEPFILE")
+    sudo usermod -aG docker $USER
+}
 taskterminator(){
     echo_title 'Terminator'
 
     if [ ! -d ~/.config/terminator ]; then
         mkdir -p ~/.config/terminator
     fi
-    ln -sf $PWD/terminator_config ~/.config/terminator/config
+    create_symlink "$PWD/terminator_config" "$HOME/.config/terminator/config"
 }
 
 tasktmux(){
     echo_title 'Tmux'
 
-    ln -sf $BASEDIR/tmux.conf ~/.tmux.conf
+    create_symlink "$BASEDIR/tmux.conf" "$HOME/.tmux.conf"
 }
 
 taskzsh(){
@@ -45,13 +127,21 @@ taskzsh(){
     if [ ! -d ~/.oh-my-zsh ]; then
         echo 'Instalando Oh My Zsh'
         sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    else
+        echo 'Atualizando Oh My Zsh'
+        omz update
     fi
-    if [ ! -d ~/.local/share/zinit/zinit.git  ]; then
+
+    if [ ! -d ~/.local/share/zinit/zinit.git ]; then
         echo 'Instalando Zinit'
         sh -c "$(curl -fsSL https://git.io/zinit-install)"
+    else
+        echo 'Atualizando Zinit'
+        zsh -c "source $HOME/.local/share/zinit/zinit.git/zinit.zsh && zinit update --all"
     fi
-    ln -sf $BASEDIR/zshrc ~/.zshrc
-    ln -sf $BASEDIR/p10k.zsh ~/.p10k.zsh
+
+    create_symlink "$BASEDIR/zshrc" "$HOME/.zshrc"
+    create_symlink "$BASEDIR/p10k.zsh" "$HOME/.p10k.zsh"
 }
 
 taskfzf(){
@@ -59,8 +149,9 @@ taskfzf(){
 
     if [ ! -d ~/.fzf ]; then
         git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    else
+        git -C ~/.fzf pull
     fi
-    git -C ~/.fzf pull
     ~/.fzf/install --all
 }
 
@@ -86,10 +177,7 @@ taskpython(){
 tasknodejs(){
     echo_title 'NodeJS'
 
-    if [ ! -d ~/.nvm ]; then
-        echo 'Install NVM'
-        wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-    fi
+    wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
 
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -103,8 +191,7 @@ tasknodejs(){
 taskvim(){
     echo_title 'VIM'
 
-    rm -rf ~/.vimrc
-    ln -s $BASEDIR/vimrc ~/.vimrc
+    create_symlink "$BASEDIR/vimrc" "$HOME/.vimrc"
 
     if [ ! -d ~/.vim ]; then
         vim +PlugInstall +qall
@@ -127,6 +214,20 @@ taskvscode() {
     done
 }
 
+tasksdkman(){
+    echo_title 'SDKMAN!'
+    export SDKMAN_DIR="$HOME/.sdkman"
+    if [ ! -d "$SDKMAN_DIR" ]; then
+        echo "Instalando SDKMAN!..."
+        curl -s "https://get.sdkman.io" | bash
+        [ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ] && . "$SDKMAN_DIR/bin/sdkman-init.sh"
+    else
+        echo "Atualizando SDKMAN!..."
+        [ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ] && . "$SDKMAN_DIR/bin/sdkman-init.sh"
+        sdk selfupdate
+    fi
+}
+
 if [ $# -eq 0 ]; then
     taskshell
     taskterminator
@@ -138,6 +239,7 @@ if [ $# -eq 0 ]; then
     tasknodejs
     taskvim
     taskvscode
+    tasksdkman
 fi
 
 for PARAM in $*
@@ -173,6 +275,9 @@ do
             ;;
         'vscode')
             taskvscode
+            ;;
+        'sdkman')
+            tasksdkman
             ;;
         *)
             echo "Não existe esta opção! " $PARAM "\n"

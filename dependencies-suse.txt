@@ -1,0 +1,14 @@
+patterns-devel-base-devel_basis
+cmake
+python3-devel
+python3-pip
+python3-virtualenv
+curl
+git
+zsh
+tmux
+fzf
+vim
+nodejs
+npm
+docker
