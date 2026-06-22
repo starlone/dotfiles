@@ -166,7 +166,16 @@ taskpyenv(){
 taskpython(){
     echo_title 'Python'
 
-    sudo -E pip3 install --upgrade -r dependencies-python.txt
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init --path)"
+
+    if [ "$(pyenv global 2>/dev/null)" = "system" ]; then
+        echo "Configure uma versão Python no pyenv antes de continuar: pyenv install <version> && pyenv global <version>"
+        return 1
+    fi
+
+    pip3 install --upgrade -r dependencies-python.txt
 }
 
 tasknodejs(){
