@@ -13,3 +13,4 @@ nodejs
 npm
 docker.io
 aptitude
+awscli

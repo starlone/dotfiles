@@ -12,3 +12,4 @@ vim
 nodejs
 npm
 docker
+aws-cli
