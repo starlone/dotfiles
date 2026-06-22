@@ -1,7 +1,7 @@
 #!/bin/sh
 
 BASEDIR=$(dirname "$0")
-cd $BASEDIR
+cd "$BASEDIR"
 
 git pull
 
@@ -109,9 +109,7 @@ install_dependencies_zypper() {
 taskterminator(){
     echo_title 'Terminator'
 
-    if [ ! -d ~/.config/terminator ]; then
-        mkdir -p ~/.config/terminator
-    fi
+    mkdir -p ~/.config/terminator
     create_symlink "$PWD/terminator_config" "$HOME/.config/terminator/config"
 }
 
@@ -197,7 +195,9 @@ taskvim(){
     vim +PlugUpgrade +qall
     vim +PlugUpdate +qall
 
-    ( cd ~/.vim/plugged/YouCompleteMe && ./install.py --ts-completer --java-completer )
+    if [ -d ~/.vim/plugged/YouCompleteMe ]; then
+        ( cd ~/.vim/plugged/YouCompleteMe && ./install.py --ts-completer --java-completer )
+    fi
 }
 
 taskvscode() {
@@ -225,9 +225,6 @@ taskgnome(){
 
     DEPFILE="dependencies-gnome.txt"
     case "$OS_ID" in
-        macos)
-            [ -f "$DEPFILE" ] && xargs brew install < "$DEPFILE"
-            ;;
         suse)
             [ -f "$DEPFILE" ] && sudo zypper install -y $(cat "$DEPFILE")
             ;;
@@ -307,7 +304,7 @@ do
             taskgnome
             ;;
         *)
-            echo "Não existe esta opção! " $PARAM "\n"
+            printf "Não existe esta opção: %s\n" "$PARAM"
             ;;
     esac
 done
