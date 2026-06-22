@@ -5,4 +5,3 @@ bpython
 ipdb
 pipenv
 autopep8
-awscli
