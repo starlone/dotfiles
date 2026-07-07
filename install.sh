@@ -85,6 +85,8 @@ install_dependencies_brew() {
     brew upgrade
     DEPFILE="dependencies-macos.txt"
     [ -f "$DEPFILE" ] && xargs brew install < "$DEPFILE"
+    DEPFILE_CASKS="dependencies-macos-casks.txt"
+    [ -f "$DEPFILE_CASKS" ] && xargs brew install --cask < "$DEPFILE_CASKS"
     sudo dseditgroup -o edit -a $USER -t user docker 2>/dev/null || true
 }
 

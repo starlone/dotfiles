@@ -1,0 +1,3 @@
+iterm2
+rectangle
+meld
