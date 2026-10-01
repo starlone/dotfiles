@@ -118,7 +118,7 @@ install_dependencies_apt() {
     sudo apt install -y aptitude
     DEPFILE="dependencies-ubuntu.txt"
     [ -f "$DEPFILE" ] && sudo aptitude install -y $(cat "$DEPFILE")
-    sudo gpasswd -a $USER docker
+    sudo gpasswd -a "$USER" docker 2>/dev/null || echo "Aviso: falha ao adicionar $USER ao grupo docker (grupo existe?)"
 }
 
 # Instala dependências via zypper (SUSE)
@@ -127,7 +127,7 @@ install_dependencies_zypper() {
     sudo zypper update -y
     DEPFILE="dependencies-suse.txt"
     [ -f "$DEPFILE" ] && sudo zypper install -y $(cat "$DEPFILE")
-    sudo usermod -aG docker $USER
+    sudo usermod -aG docker "$USER" 2>/dev/null || echo "Aviso: falha ao adicionar $USER ao grupo docker (grupo existe?)"
 }
 taskterminator(){
     echo_title 'Terminator'
@@ -250,6 +250,11 @@ taskvim(){
 taskvscode() {
     echo_title 'VSCode'
 
+    if ! command -v code >/dev/null 2>&1; then
+        echo "Aviso: comando 'code' nao encontrado (abra o VS Code e rode 'Shell Command: Install code in PATH'); pulando."
+        return 1
+    fi
+
     for extension in $(cat dependencies-vscode.txt)
     do
         code --install-extension $extension
@@ -311,10 +316,10 @@ if [ $# -eq 0 ]; then
     taskgnome
 fi
 
+EXIT_CODE=0
 for PARAM in "$@"
 do
     case $PARAM in
-
         'shell')
             taskshell
             ;;
@@ -356,6 +361,8 @@ do
             ;;
         *)
             printf "Não existe esta opção: %s\n" "$PARAM"
+            EXIT_CODE=1
             ;;
     esac
 done
+exit "$EXIT_CODE"
