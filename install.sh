@@ -1,9 +1,20 @@
 #!/bin/sh
 
-BASEDIR=$(dirname "$0")
+BASEDIR=$(cd "$(dirname "$0")" && pwd)
 cd "$BASEDIR"
 
-git pull
+OLD_HEAD=$(git rev-parse HEAD 2>/dev/null)
+if git pull --ff-only >/dev/null 2>&1; then
+    NEW_HEAD=$(git rev-parse HEAD 2>/dev/null)
+    # sh le o script do disco conforme executa; se o pull atualizou o proprio
+    # install.sh, continuar com o offset antigo corrompe a execucao. Re-executa.
+    if [ "$OLD_HEAD" != "$NEW_HEAD" ] && [ -n "$(git diff --name-only "$OLD_HEAD" "$NEW_HEAD" -- install.sh 2>/dev/null)" ]; then
+        echo "install.sh atualizado pelo git pull; re-executando a versao nova..."
+        exec "$BASEDIR/install.sh" "$@"
+    fi
+else
+    echo "Aviso: git pull falhou (offline ou mudancas locais); seguindo com a versao local."
+fi
 
 echo_title() {
     echo '
@@ -17,6 +28,10 @@ echo_title() {
 create_symlink() {
     SRC="$1"
     DEST="$2"
+    if [ ! -e "$SRC" ]; then
+        echo "ERRO: origem '$SRC' nao existe; link '$DEST' nao foi criado."
+        return 1
+    fi
     if [ -L "$DEST" ]; then
         # Se já é link e aponta para o destino correto, não faz nada
         if [ "$(readlink "$DEST")" = "$SRC" ]; then
@@ -80,6 +95,12 @@ install_dependencies_brew() {
     if ! command -v brew >/dev/null 2>&1; then
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
+    # Torna o brew (possivelmente recem-instalado) disponivel nesta sessao
+    if [ -x /opt/homebrew/bin/brew ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    elif [ -x /usr/local/bin/brew ]; then
+        eval "$(/usr/local/bin/brew shellenv)"
+    fi
     echo "Instalando dependências do Homebrew..."
     brew update
     brew upgrade
@@ -112,7 +133,14 @@ taskterminator(){
     echo_title 'Terminator'
 
     mkdir -p ~/.config/terminator
-    create_symlink "$PWD/terminator_config" "$HOME/.config/terminator/config"
+    create_symlink "$BASEDIR/terminator_config" "$HOME/.config/terminator/config"
+}
+
+taskherdr(){
+    echo_title 'Herdr'
+
+    mkdir -p ~/.config/herdr
+    create_symlink "$BASEDIR/herdr_config" "$HOME/.config/herdr/config.toml"
 }
 
 tasktmux(){
@@ -126,15 +154,15 @@ taskzsh(){
 
     if [ ! -d ~/.oh-my-zsh ]; then
         echo 'Instalando Oh My Zsh'
-        sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+        RUNZSH=no CHSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     else
         echo 'Atualizando Oh My Zsh'
-        omz update
+        zsh -c 'source ~/.oh-my-zsh/lib/cli.zsh && omz update'
     fi
 
     if [ ! -d ~/.local/share/zinit/zinit.git ]; then
         echo 'Instalando Zinit'
-        sh -c "$(curl -fsSL https://git.io/zinit-install)"
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
     else
         echo 'Atualizando Zinit'
         zsh -c "source $HOME/.local/share/zinit/zinit.git/zinit.zsh && zinit update --all"
@@ -157,6 +185,11 @@ taskfzf(){
 
 taskpyenv(){
     echo_title 'PyEnv'
+
+    if [ "$OS_ID" = "macos" ]; then
+        echo 'PyEnv gerenciado via Homebrew (taskshell), nada a fazer aqui.'
+        return
+    fi
 
     if [ ! -d ~/.pyenv ]; then
         echo 'Instalando PyEnv'
@@ -185,7 +218,8 @@ taskpython(){
 tasknodejs(){
     echo_title 'NodeJS'
 
-    wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+    # PROFILE=/dev/null impede o instalador do nvm de anexar o carregamento ao zshrc
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | PROFILE=/dev/null bash
 
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -252,7 +286,7 @@ tasksdkman(){
     export SDKMAN_DIR="$HOME/.sdkman"
     if [ ! -d "$SDKMAN_DIR" ]; then
         echo "Instalando SDKMAN!..."
-        curl -s "https://get.sdkman.io" | bash
+        curl -fsSL "https://get.sdkman.io" | bash
         [ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ] && . "$SDKMAN_DIR/bin/sdkman-init.sh"
     else
         echo "Atualizando SDKMAN!..."
@@ -264,6 +298,7 @@ tasksdkman(){
 if [ $# -eq 0 ]; then
     taskshell
     taskterminator
+    taskherdr
     tasktmux
     taskzsh
     taskfzf
@@ -285,6 +320,9 @@ do
             ;;
         'terminator')
             taskterminator
+            ;;
+        'herdr')
+            taskherdr
             ;;
         'tmux')
             tasktmux
