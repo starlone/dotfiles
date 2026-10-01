@@ -7,8 +7,6 @@ zsh
 tmux
 fzf
 vim
-node
-npm
 docker
 bash
 awscli

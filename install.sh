@@ -108,7 +108,24 @@ install_dependencies_brew() {
     [ -f "$DEPFILE" ] && xargs brew install < "$DEPFILE"
     DEPFILE_CASKS="dependencies-macos-casks.txt"
     [ -f "$DEPFILE_CASKS" ] && xargs brew install --cask < "$DEPFILE_CASKS"
+    install_node_lts
     sudo dseditgroup -o edit -a $USER -t user docker 2>/dev/null || true
+}
+
+# Node LTS como runtime "ambiente": processos fora do zsh (launchd, GUI, #!/bin/sh)
+# nao veem o node do nvm, que existe so via PATH de shell interativo. Resolve o
+# major LTS vigente no indice oficial do Node em vez de travar versao no deps file.
+install_node_lts() {
+    command -v brew >/dev/null 2>&1 || return 0
+    LTS_MAJOR=$(curl -fsSL https://nodejs.org/dist/index.json 2>/dev/null | python3 -c 'import json,sys; print(next(x["version"].split(".")[0].lstrip("v") for x in json.load(sys.stdin) if x["lts"]))' 2>/dev/null)
+    if [ -n "$LTS_MAJOR" ]; then
+        echo "Instalando Node LTS ambiente (major $LTS_MAJOR)..."
+        brew install "node@$LTS_MAJOR"
+        brew link --force --overwrite "node@$LTS_MAJOR" 2>/dev/null || true
+    else
+        echo "Aviso: nao consegui descobrir o major LTS do Node; instalando o node corrente."
+        brew install node
+    fi
 }
 
 # Instala dependências via apt/aptitude (Debian/Ubuntu)
