@@ -167,3 +167,9 @@ export PATH="$HOME/.local/bin:$PATH"
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# Corporate CA (Netskope) — necessario p/ CLIs Node/Bun (opencode, etc) atras do proxy corporativo
+export NODE_EXTRA_CA_CERTS="$HOME/.config/opencode/corporate-ca.pem"
+
+# Config local da maquina (nao versionada): aliases com IDs de subscription, overrides, etc.
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
